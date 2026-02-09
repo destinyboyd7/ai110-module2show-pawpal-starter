@@ -7,6 +7,9 @@
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
 
+Add Pet Profile 
+Feeding Alerts
+
 **b. Design changes**
 
 - Did your design change during implementation?
