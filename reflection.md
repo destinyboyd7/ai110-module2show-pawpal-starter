@@ -2,18 +2,34 @@
 
 ## 1. System Design
 
+Three core actions a user should be able to perform: 
+    Add Pet Profile 
+    Owner Availabiltiy 
+    Hourly/Daily Planner 
+
 **a. Initial design**
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
 
-Add Pet Profile 
-Feeding Alerts
+My intial UML design includes an Owner owns multiple Pet profiles; each Pet has many Task entries; a Scheduler takes an Owner and the Pets' Tasks and produces a daily plan, handling priorities, time constraints and conflicts. My include classes were the Owner, Pet, Task, and Scheduler. The assigned responsibilities are as listed below:
+
+    Owner:
+        - manage pet list, report total available time, update owner preferences
+    Pet:
+        - hold pet data, add/remove tasks, compute total care time
+    Task:
+        - represent a schedulable unit, expose duration/priority, check schedulability, comparison for ordering
+    Scheduler:
+        - generate and optimize schedules, sort/prioritize tasks, detect/resolve conflicts, reschedule, export and explain the resulting plan
+
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+
+Yes my design changed during implemetation. there were missing relationships related to task ownership and the direct connection between scheduler and task. The logic bottlenecks were task aggregation, conflict resoultion, updating relationships, and scalability. One change I made was adding a flat list of all the task to the scheduler. I made this schnage so that the owner could have easier acess to the task. Each task also was change to refernce its specifc pet and each pet references its owner. 
 
 ---
 

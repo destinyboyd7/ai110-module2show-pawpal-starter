@@ -1,72 +1,134 @@
-classDiagram
-    class Owner {
-        +name: string
-        +available_time: int
-        +preferences: dict
-        +pets: list~Pet~
-        +__init__(name, available_time, preferences=None)
-        +add_pet(pet)
-        +remove_pet(pet)
-        +get_total_available_time()
-        +update_preferences(preferences)
-        +__str__()
-    }
 
-    class Pet {
-        +name: string
-        +species: string
-        +age: int
-        +special_needs: list~string~
-        +tasks: list~Task~
-        +__init__(name, species, age, special_needs=None)
-        +add_task(task)
-        +remove_task(task)
-        +get_all_tasks()
-        +get_total_care_time()
-        +__str__()
+class Owner {
+    constructor(name, available_time, preferences = {}) {
+        this.name = name;
+        this.available_time = available_time;
+        this.preferences = preferences;
+        this.pets = [];
     }
-
-    class Task {
-        +name: string
-        +duration: int
-        +priority: int
-        +category: string
-        +frequency: string
-        +preferred_time: string
-        +is_flexible: bool
-        +notes: string
-        +__init__(name, duration, priority, category, frequency="daily", preferred_time=None, is_flexible=True, notes="")
-        +get_priority()
-        +get_duration()
-        +is_high_priority()
-        +can_be_scheduled_at(time_slot)
-        +update_details(duration, priority, category, ...)
-        +__str__()
-        +__lt__(other)
+    addPet(pet) {
+        this.pets.push(pet);
     }
-
-    class Scheduler {
-        +owner: Owner
-        +daily_plan: list~dict~
-        +unscheduled_tasks: list~Task~
-        +scheduling_strategy: string
-        +__init__(owner, strategy="priority_first")
-        +generate_schedule()
-        +_sort_tasks_by_priority()
-        +_calculate_total_task_time()
-        +_can_fit_all_tasks()
-        +_schedule_high_priority_first()
-        +_optimize_by_time_blocks()
-        +_handle_conflicts()
-        +get_schedule()
-        +get_unscheduled_tasks()
-        +explain_schedule()
-        +reschedule()
-        +export_schedule(format)
-        +__str__()
+    removePet(pet) {
+        this.pets = this.pets.filter(p => p !== pet);
     }
+    getTotalAvailableTime() {
+        return this.available_time;
+    }
+    updatePreferences(preferences) {
+        this.preferences = preferences;
+    }
+    toString() {
+        return `${this.name} (Available time: ${this.available_time})`;
+    }
+}
 
-    Owner "1" *-- "0..*" Pet : owns
-    Pet "1" *-- "0..*" Task : has
-    Scheduler "1" --> "1" Owner : schedules for
-    Scheduler "1" ..> "0..*" Task : manages
+class Pet {
+    constructor(name, species, age, special_needs = []) {
+        this.name = name;
+        this.species = species;
+        this.age = age;
+        this.special_needs = special_needs;
+        this.tasks = [];
+    }
+    addTask(task) {
+        this.tasks.push(task);
+    }
+    removeTask(task) {
+        this.tasks = this.tasks.filter(t => t !== task);
+    }
+    getAllTasks() {
+        return this.tasks;
+    }
+    getTotalCareTime() {
+        return this.tasks.reduce((sum, task) => sum + task.duration, 0);
+    }
+    toString() {
+        return `${this.name} (${this.species}, Age: ${this.age})`;
+    }
+}
+
+class Task {
+    constructor(name, duration, priority, category, frequency = "daily", preferred_time = null, is_flexible = true, notes = "") {
+        this.name = name;
+        this.duration = duration;
+        this.priority = priority;
+        this.category = category;
+        this.frequency = frequency;
+        this.preferred_time = preferred_time;
+        this.is_flexible = is_flexible;
+        this.notes = notes;
+    }
+    getPriority() {
+        return this.priority;
+    }
+    getDuration() {
+        return this.duration;
+    }
+    isHighPriority() {
+        return this.priority >= 8;
+    }
+    canBeScheduledAt(time_slot) {
+        return this.is_flexible || this.preferred_time === time_slot;
+    }
+    updateDetails({duration, priority, category, frequency, preferred_time, is_flexible, notes}) {
+        if (duration !== undefined) this.duration = duration;
+        if (priority !== undefined) this.priority = priority;
+        if (category !== undefined) this.category = category;
+        if (frequency !== undefined) this.frequency = frequency;
+        if (preferred_time !== undefined) this.preferred_time = preferred_time;
+        if (is_flexible !== undefined) this.is_flexible = is_flexible;
+        if (notes !== undefined) this.notes = notes;
+    }
+    toString() {
+        return `${this.name} (${this.category}, Priority: ${this.priority})`;
+    }
+}
+
+class Scheduler {
+    constructor(owner, strategy = "priority_first") {
+        this.owner = owner;
+        this.daily_plan = [];
+        this.unscheduled_tasks = [];
+        this.scheduling_strategy = strategy;
+    }
+    generateSchedule() {
+        // Implementation goes here
+    }
+    _sortTasksByPriority() {
+        // Implementation goes here
+    }
+    _calculateTotalTaskTime() {
+        // Implementation goes here
+    }
+    _canFitAllTasks() {
+        // Implementation goes here
+    }
+    _scheduleHighPriorityFirst() {
+        // Implementation goes here
+    }
+    _optimizeByTimeBlocks() {
+        // Implementation goes here
+    }
+    _handleConflicts() {
+        // Implementation goes here
+    }
+    getSchedule() {
+        return this.daily_plan;
+    }
+    getUnscheduledTasks() {
+        return this.unscheduled_tasks;
+    }
+    explainSchedule() {
+        // Implementation goes here
+    }
+    reschedule() {
+        // Implementation goes here
+    }
+    exportSchedule(format) {
+        // Implementation goes here
+    }
+    toString() {
+        return `Scheduler for ${this.owner.name}`;
+    }
+}
