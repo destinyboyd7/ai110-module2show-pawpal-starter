@@ -41,3 +41,8 @@ pip install -r requirements.txt
 5. Add tests to verify key behaviors.
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
+
+
+## Smart Scheduling 
+Updated the schduler used on the pet care app to prioritize time. This allowed for sorting to occur so that no matter the order the task are inpputted it will be sorted by time correctly. Also, added conflict detetion method to avoid time conflicts for different tasks. 
+ 
