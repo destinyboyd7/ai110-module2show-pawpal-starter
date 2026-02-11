@@ -45,4 +45,8 @@ pip install -r requirements.txt
 
 ## Smart Scheduling 
 Updated the schduler used on the pet care app to prioritize time. This allowed for sorting to occur so that no matter the order the task are inpputted it will be sorted by time correctly. Also, added conflict detetion method to avoid time conflicts for different tasks. 
- 
+
+## Testing PawPal+
+command to run tests: python3 -m unittest tests/test_pawpal.py
+
+I have about 11 different test the cover the most importnat edge cases for the per schduler. This includes task completion, task addition, sorting correctness, reoccurence of daily taks, conflict detection for the same and different pets, Edge time values. Moving into specific for the scheduler it was tested what it would do when it has no pet or tasks entered and make sure it returns empty when all task are completed. Last things it test for when if overude tasks were handled propely and how the ystem handles taks with unsupported frequency. 
