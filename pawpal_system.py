@@ -224,7 +224,7 @@ class Scheduler:
 
         conflicts = defaultdict(list)
         # Same-pet conflicts
-        for (time, pet_name), tasks in time_pet_map.items():
+        for (time), tasks in time_pet_map.items():
             if len(tasks) > 1:
                 conflicts[time].append(tasks)
         # Cross-pet conflicts
