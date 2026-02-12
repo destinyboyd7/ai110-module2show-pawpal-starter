@@ -76,5 +76,5 @@ I have about 11 different test the cover the most importnat edge cases for the p
 
 ## 📸 Demo
 
-![PawPal App](PawPal_SS.png)
+<a href="/course_images/ai110/PawPal_SS.png" target="_blank"><img src='/course_images/ai110/PawPal_SS.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>
 
