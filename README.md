@@ -49,4 +49,33 @@ Updated the schduler used on the pet care app to prioritize time. This allowed f
 ## Testing PawPal+
 command to run tests: python3 -m unittest tests/test_pawpal.py
 
-I have about 11 different test the cover the most importnat edge cases for the per schduler. This includes task completion, task addition, sorting correctness, reoccurence of daily taks, conflict detection for the same and different pets, Edge time values. Moving into specific for the scheduler it was tested what it would do when it has no pet or tasks entered and make sure it returns empty when all task are completed. Last things it test for when if overude tasks were handled propely and how the ystem handles taks with unsupported frequency. 
+I have about 11 different test the cover the most importnat edge cases for the per schduler. This includes task completion, task addition, sorting correctness, reoccurence of daily taks, conflict detection for the same and different pets, Edge time values. Moving into specific for the scheduler it was tested what it would do when it has no pet or tasks entered and make sure it returns empty when all task are completed. Last things it test for when if overude tasks were handled propely and how the ystem handles taks with unsupported frequency. My confinced in the system's reliability based on my test results are a 4 stars because all test passed very quickly but their could always be faults I am missing. 
+
+
+
+
+## Features
+
+- Recurring Task Scheduling: Automatically generates the next occurrence of daily, weekly, or monthly tasks when a task is marked complete.
+
+- Task Completion Tracking: Allows marking tasks as complete or resetting their status to pending.
+
+- Conflict Detection: Identifies scheduling conflicts for tasks that overlap in time, both within the same pet and across different pets.
+
+- Overdue Task Identification: Detects and lists all tasks that are overdue and still pending.
+
+- Task Filtering: Filters tasks by completion status and/or by pet name for easy management.
+
+- Daily Schedule Generation: Produces a daily schedule for each pet, sorted by time, showing all pending daily tasks.
+
+- Task Sorting: Sorts tasks by their scheduled time for organized viewing and scheduling.
+
+- Multi-Pet Management: Supports managing multiple pets and their associated tasks under a single owner.
+
+- Batch Task Completion: Allows marking multiple tasks as complete in a single operation.
+
+## 📸 Demo
+
+<a href= "/Users/destiny/IntroAI/ai110-module2show-pawpal-starter/PawPal_SS.png" target="_blank"><img src='/Users/destiny/IntroAI/ai110-module2show-pawpal-starter/PawPal_SS.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>.
+
+

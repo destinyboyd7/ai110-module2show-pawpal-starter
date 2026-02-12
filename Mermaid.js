@@ -1,134 +1,170 @@
+classDiagram
+    class Owner {
+        constructor(name) {
+            this.name = name;
+            this.pets = [];
+        }
+        add_pet(pet) {
+            if (!(pet instanceof Pet)) throw new TypeError("Can only add Pet objects.");
+            this.pets.push(pet);
+        }
+        remove_pet(pet) {
+            this.pets = this.pets.filter(p => p !== pet);
+        }
+        get_all_pets() {
+            return [...this.pets];
+        }
+        get_all_tasks() {
+            let tasks = [];
+            for (const pet of this.pets) {
+                tasks = tasks.concat(pet.get_all_tasks());
+            }
+            return tasks;
+        }
+        toString() {
+            return `Owner(name='${this.name}', pets=${this.pets.length})`;
+        }
+    }
 
-class Owner {
-    constructor(name, available_time, preferences = {}) {
-        this.name = name;
-        this.available_time = available_time;
-        this.preferences = preferences;
-        this.pets = [];
+    class Pet {
+        constructor(name, species, age) {
+            this.name = name;
+            this.species = species;
+            this.age = age;
+            this.tasks = [];
+        }
+        add_task(task) {
+            if (!(task instanceof Task)) throw new TypeError("Can only add Task objects.");
+            task.parent_pet = this;
+            this.tasks.push(task);
+        }
+        remove_task(task) {
+            this.tasks = this.tasks.filter(t => t !== task);
+        }
+        get_all_tasks() {
+            return [...this.tasks];
+        }
+        get_pending_tasks() {
+            return this.tasks.filter(task => !task.completion_status);
+        }
+        toString() {
+            return `Pet(name='${this.name}', species='${this.species}', age=${this.age}, tasks=${this.tasks.length})`;
+        }
     }
-    addPet(pet) {
-        this.pets.push(pet);
-    }
-    removePet(pet) {
-        this.pets = this.pets.filter(p => p !== pet);
-    }
-    getTotalAvailableTime() {
-        return this.available_time;
-    }
-    updatePreferences(preferences) {
-        this.preferences = preferences;
-    }
-    toString() {
-        return `${this.name} (Available time: ${this.available_time})`;
-    }
-}
 
-class Pet {
-    constructor(name, species, age, special_needs = []) {
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        this.special_needs = special_needs;
-        this.tasks = [];
+    class Task {
+        constructor(description, time, frequency, completion_status = false, parent_pet = null) {
+            this.description = description;
+            this.time = time;
+            this.frequency = frequency;
+            this.completion_status = completion_status;
+            this.parent_pet = parent_pet;
+        }
+        mark_complete() {
+            this.completion_status = true;
+            if (["daily", "weekly", "monthly"].includes(this.frequency) && this.parent_pet) {
+                this._create_next_occurrence();
+            }
+        }
+        _create_next_occurrence() {
+            // Implementation: create a new Task for the next occurrence and add to parent_pet
+        }
+        reset_status() {
+            this.completion_status = false;
+        }
+        toString() {
+            const status = this.completion_status ? "Complete" : "Pending";
+            return `Task(description='${this.description}', time='${this.time}', frequency='${this.frequency}', status='${status}')`;
+        }
     }
-    addTask(task) {
-        this.tasks.push(task);
-    }
-    removeTask(task) {
-        this.tasks = this.tasks.filter(t => t !== task);
-    }
-    getAllTasks() {
-        return this.tasks;
-    }
-    getTotalCareTime() {
-        return this.tasks.reduce((sum, task) => sum + task.duration, 0);
-    }
-    toString() {
-        return `${this.name} (${this.species}, Age: ${this.age})`;
-    }
-}
 
-class Task {
-    constructor(name, duration, priority, category, frequency = "daily", preferred_time = null, is_flexible = true, notes = "") {
-        this.name = name;
-        this.duration = duration;
-        this.priority = priority;
-        this.category = category;
-        this.frequency = frequency;
-        this.preferred_time = preferred_time;
-        this.is_flexible = is_flexible;
-        this.notes = notes;
+    class Scheduler {
+        constructor(owner) {
+            this.owner = owner;
+        }
+        conflict_warnings() {}
+        detect_conflicts() {}
+        get_tasks_by_frequency(frequency) {}
+        get_overdue_tasks() {}
+        get_tasks_for_pet(pet_name) {}
+        generate_daily_schedule() {}
+        sort_by_time(tasks) {}
+        mark_tasks_complete(tasks) {}
+        filter_tasks(completion_status = null, pet_name = null) {}
+        toString() {
+            return `Scheduler(owner='${this.owner.name}')`;
+        }
     }
-    getPriority() {
-        return this.priority;
-    }
-    getDuration() {
-        return this.duration;
-    }
-    isHighPriority() {
-        return this.priority >= 8;
-    }
-    canBeScheduledAt(time_slot) {
-        return this.is_flexible || this.preferred_time === time_slot;
-    }
-    updateDetails({duration, priority, category, frequency, preferred_time, is_flexible, notes}) {
-        if (duration !== undefined) this.duration = duration;
-        if (priority !== undefined) this.priority = priority;
-        if (category !== undefined) this.category = category;
-        if (frequency !== undefined) this.frequency = frequency;
-        if (preferred_time !== undefined) this.preferred_time = preferred_time;
-        if (is_flexible !== undefined) this.is_flexible = is_flexible;
-        if (notes !== undefined) this.notes = notes;
-    }
-    toString() {
-        return `${this.name} (${this.category}, Priority: ${this.priority})`;
-    }
-}
 
-class Scheduler {
-    constructor(owner, strategy = "priority_first") {
-        this.owner = owner;
-        this.daily_plan = [];
-        this.unscheduled_tasks = [];
-        this.scheduling_strategy = strategy;
+    // Standalone TimeSlot dataclass (not used in main relationships)
+    class TimeSlot {
+        constructor(start, end) {
+            this.start = start;
+            this.end = end;
+        }
     }
-    generateSchedule() {
-        // Implementation goes here
+
+/*
+classDiagram
+    class Owner {
+        -string name
+        -List~Pet~ pets
+        +__init__(name: string)
+        +add_pet(pet: Pet) void
+        +remove_pet(pet: Pet) void
+        +get_all_pets() List~Pet~
+        +get_all_tasks() List~Task~
+        +__str__() string
     }
-    _sortTasksByPriority() {
-        // Implementation goes here
+
+    class Pet {
+        -string name
+        -string species
+        -int age
+        -List~Task~ tasks
+        +__init__(name: string, species: string, age: int)
+        +add_task(task: Task) void
+        +remove_task(task: Task) void
+        +get_all_tasks() List~Task~
+        +get_pending_tasks() List~Task~
+        +__str__() string
     }
-    _calculateTotalTaskTime() {
-        // Implementation goes here
+
+    class Task {
+        -string description
+        -string time
+        -string frequency
+        -bool completion_status
+        -Pet parent_pet
+        +__init__(description: string, time: string, frequency: string, completion_status: bool, parent_pet: Pet)
+        +mark_complete() void
+        -_create_next_occurrence() void
+        +reset_status() void
+        +__str__() string
     }
-    _canFitAllTasks() {
-        // Implementation goes here
+
+    class Scheduler {
+        -Owner owner
+        +__init__(owner: Owner)
+        +conflict_warnings() List~string~
+        +detect_conflicts() Dict~string, List~List~Task~~~
+        +get_tasks_by_frequency(frequency: string) List~Task~
+        +get_overdue_tasks() List~Task~
+        +get_tasks_for_pet(pet_name: string) List~Task~
+        +generate_daily_schedule() Dict~string, List~Task~~
+        +sort_by_time(tasks: List~Task~) List~Task~
+        +mark_tasks_complete(tasks: List~Task~) void
+        +filter_tasks(completion_status: bool, pet_name: string) List~Task~
+        +__str__() string
     }
-    _scheduleHighPriorityFirst() {
-        // Implementation goes here
+
+    class TimeSlot {
+        +datetime start
+        +datetime end
     }
-    _optimizeByTimeBlocks() {
-        // Implementation goes here
-    }
-    _handleConflicts() {
-        // Implementation goes here
-    }
-    getSchedule() {
-        return this.daily_plan;
-    }
-    getUnscheduledTasks() {
-        return this.unscheduled_tasks;
-    }
-    explainSchedule() {
-        // Implementation goes here
-    }
-    reschedule() {
-        // Implementation goes here
-    }
-    exportSchedule(format) {
-        // Implementation goes here
-    }
-    toString() {
-        return `Scheduler for ${this.owner.name}`;
-    }
-}
+
+    Owner "1" --> "*" Pet : owns
+    Pet "1" --> "*" Task : has
+    Task "*" --> "0..1" Pet : parent_pet
+    Scheduler "1" --> "1" Owner : manages
+*/
