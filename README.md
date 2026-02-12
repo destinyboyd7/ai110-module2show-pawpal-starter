@@ -76,6 +76,6 @@ I have about 11 different test the cover the most importnat edge cases for the p
 
 ## 📸 Demo
 
-<a href= "/Users/destiny/IntroAI/ai110-module2show-pawpal-starter/PawPal_SS.png" target="_blank"><img src='/Users/destiny/IntroAI/ai110-module2show-pawpal-starter/PawPal_SS.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>.
+<a href="/Users/destiny/IntroAI/ai110-module2show-pawpal-starter/PawPal_SS.png" target="_blank"><img src='/Users/destiny/IntroAI/ai110-module2show-pawpal-starter/PawPal_SS.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>
 
 
